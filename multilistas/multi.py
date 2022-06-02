@@ -48,6 +48,14 @@ class Multilista:
             
             aux = aux.next
             print()
+    
+    def total_alunos(self):
+        aux = self.head
+        total = 0
+        while aux:
+            total+= len(aux.alunos)
+            aux = aux.next
+        return total 
 
 
 uepb = Multilista()
@@ -62,4 +70,5 @@ uepb.cadastrarAluno('Maria','Crato','ADM','noite')
 uepb.cadastrarAluno('Vitoria','Patos','ADM','manhã')
 print('__________________')
 uepb.relatorio()
+print(uepb.total_alunos())
 print('__________________')

@@ -98,24 +98,36 @@ class LinkedList:
         while aux.next:
             aux = aux.next
         aux.next = lista.head
+        
 
     def pop(self,index=-1):
-        if index == 0:
-            aux = self.head
-            self.head = aux.next
-            aux.next = None
-            del aux
-
+        if index == -1:
+            if not self.head:
+                raise IndexError('lista vazia')
+            elif not self.head.next:
+                del self.head
+                self.head=None
+            else:
+                aux = self.head
+                while aux.next:
+                    ant = aux
+                    aux = aux.next
+                del aux
+                ant.next = None
         else:
-            if index == -1:
-                index = len(self)-1
-            aux = self.head
-            for i in range(index):
-                ant = aux
-                aux = aux.next
-            ant.next = aux.next
-            aux.next = None
-            del aux
+            if self.__size <= index:
+                raise IndexError('indice fora da lista')
+            elif index == 0:
+                aux = self.head
+                self.head = aux.next
+                del aux
+            else:
+                aux = self.head
+                for i in range(index):
+                    ant = aux
+                    aux = aux.next
+                ant.next = aux.next
+                del aux
 
     def print_partial(self,ant,prox):
         aux = self.head
@@ -145,7 +157,7 @@ l.append(1)
 l.append(2)
 l.append(3)
 l.append(4)
-l.append(5)
+
 l.append(6)
 l.append(7)
 l.append(8)
@@ -159,7 +171,7 @@ l2.append(50)
 
 print(l)
 
-l.inverse()
+l.pop(4)
 
 print(l)
 
@@ -177,6 +189,6 @@ print(l)
 
 #l.extend(l2)
 
-#l2.pop()
-
 #l.print_partial(2,4)
+
+#l.inverse()
