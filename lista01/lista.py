@@ -56,6 +56,21 @@ class LinkedList:
         output +=']'
         return output
 
+    def busca_binaria(self,x,inf=0,sup=None):
+        if sup is None:
+            sup = len(self)-1
+        
+        if inf <= sup:
+            meio = (inf+sup)//2
+
+            if x == self[meio]:
+                return meio
+            if x < self[meio]:
+                return self.busca_binaria(x,inf,meio-1)
+            else:
+                return self.busca_binaria(x,meio+1,sup)
+        return -1
+
     def ordenar(self,lista):
         i=0
         j=0
@@ -100,5 +115,7 @@ print(lm)
 #l[1]=46
 #print(l[1])
 #print(l)
-o = l.ordenar(lm)
-print(o)
+#o = l.ordenar(lm)
+#print(o)
+
+print(l.busca_binaria(5))
