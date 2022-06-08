@@ -14,8 +14,7 @@ class Fila_prioridades:
         if cliente.idade >= 65:
             if self.ini:
                 aux = self.ini
-                ant = aux
-                while aux.next.idade >= 65:
+                while aux.idade >= 65:
                     ant = aux
                     aux = aux.next
                 cliente.next = ant.next
@@ -44,4 +43,6 @@ c.inserir_cliente('Miguel',34)
 c.inserir_cliente('Regina',76)
 c.inserir_cliente('João',80)
 c.inserir_cliente('Martha',25)
+c.inserir_cliente('Luka',77)
+c.inserir_cliente('Jose',80)
 c.print_clientes()
