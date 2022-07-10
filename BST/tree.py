@@ -15,7 +15,7 @@ class BSTnode:
             if self.right:
                 self.right.insert(value)
             else:
-                self.right=BSTnode(value)
+                self.right = BSTnode(value)
     
     def imprimir_pre(self):
         if self.data:
@@ -77,6 +77,43 @@ class BSTnode:
 
             return alt_e + 1 if alt_e > alt_d else alt_d + 1
 
+    def balanceada(self):
+        if not self.data:
+            return True
+        else:
+            x = self.left.balanceada() if self.left else True
+            y = self.right.balanceada() if self.right else True
+            a = self.left.altura() if self.left else -1
+            b = self.right.altura() if self.right else -1
+            z = abs(a-b) <=1
+            return  x and y and z
+    
+    def gerar_lista(self,lista):
+        if self.data:
+            if self.left:
+                self.left.gerar_lista(lista)
+            lista.append(self.data)
+            if self.right:
+                self.right.gerar_lista(lista)
+    
+    def destruir(self):
+        if self.data:
+            if self.left:
+                self.left.destruir()
+            if self.right:
+                self.right.destruir()
+            del self.data
+            del self
+    
+    # def gerar_arvore(self,lista,ini,fim):
+    #     if ini > fim:
+    #         pass
+    #     else:
+    #         meio = (ini + fim) // 2
+    #         self.data = lista[meio]
+    #         self.left = self.left.gerar_arvore(lista, ini, meio-1)
+    #         self.right = self.right.gerar_arvore(lista, meio+1, fim)
+
 root = BSTnode()
 root.insert(10)
 root.insert(7)
@@ -95,3 +132,7 @@ root.imprimir_pos()
 print('\nTamanho: ',root.tamanho())
 print('Soma: ',root.soma())
 print('Altura: ',root.altura())
+print('Balanceada: ',root.balanceada())
+vet = []
+root.gerar_lista(vet)
+print('lista: ',vet)
