@@ -17,15 +17,45 @@ class TreeNode:
             else:
                 self.right = TreeNode(value)
     
-    def imprimir_pre(self):
-        if self.data:
-            print(self.left.data if self.left else 'x','<-',self.data,'->',self.right.data if self.right else 'x')
+    def graus(self):
+        if self.data:            
+            if self.left and self.right:
+                print(self.data,'Grau->',2)
+            elif self.left or self.right:
+                print(self.data,'Grau->',1)
+            else:
+                print(self.data,'Grau->',0)
             if self.left:
-                self.left.imprimir_pre()
+                self.left.graus()
             if self.right:
-                self.right.imprimir_pre()
+                self.right.graus()
     
+    def folhas(self):
+        if not self.data:
+            return 0
+        elif not self.left and not self.right:
+            return 1
+        else:
+            if self.left:
+                e = self.left.folhas()
+            else:
+                e = 0
+            if self.right:
+                d = self.right.folhas()
+            else:
+                d = 0
+            return e + d 
     
+    def paiefilho(self):
+        if self.data:
+            if self.left:
+                if self.left.left or self.left.right:
+                    print(self.left.data)
+                self.left.paiefilho()
+            if self.right:    
+                if self.right.right or self.right.left:
+                    print(self.right.data)
+                self.right.paiefilho()
 
 root = TreeNode()
 root.insert(10)
@@ -36,5 +66,9 @@ root.insert(20)
 root.insert(25)
 root.insert(13)
 root.insert(2)
-print('Pré-ordem:')
-root.imprimir_pre()
+
+#print('Graus:')
+#root.graus()
+#print('Folhas:',root.folhas())
+print('Pai e filho:')
+root.paiefilho()
