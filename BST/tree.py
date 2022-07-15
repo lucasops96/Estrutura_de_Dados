@@ -19,7 +19,7 @@ class BSTnode:
     
     def imprimir_pre(self):
         if self.data:
-            print(self.data,end=' ')
+            print(self.left.data if self.left else 'x','<-',self.data,'->',self.right.data if self.right else 'x')
             if self.left:
                 self.left.imprimir_pre()
             if self.right:
@@ -105,14 +105,29 @@ class BSTnode:
             del self.data
             del self
     
-    # def gerar_arvore(self,lista,ini,fim):
-    #     if ini > fim:
-    #         pass
-    #     else:
-    #         meio = (ini + fim) // 2
-    #         self.data = lista[meio]
-    #         self.left = self.left.gerar_arvore(lista, ini, meio-1)
-    #         self.right = self.right.gerar_arvore(lista, meio+1, fim)
+    def gerar_arvore(self,lista,ini,fim):
+        meio = (ini + fim) // 2
+        self.data = lista[meio]
+        if ini <= meio - 1:
+            self.left = BSTnode()
+            self.left.gerar_arvore(lista, ini, meio-1)
+        else:
+            self.left = None
+        if meio+1 <= fim:
+            self.right=BSTnode()
+            self.right.gerar_arvore(lista, meio+1, fim)
+        else:
+            self.right = None
+    
+    def balanceamento_estatico(self):
+        if not self.balanceada():
+            l=[]
+            self.gerar_lista(l)
+            self.destruir()
+            self.gerar_arvore(l,0, len(l)-1)
+            return self
+
+
 
 root = BSTnode()
 root.insert(10)
@@ -123,16 +138,21 @@ root.insert(20)
 root.insert(25)
 root.insert(13)
 root.insert(2)
-print('Pré-ordem:', end=' ')
-root.imprimir_pre()
-print('\nOrdem central: ', end=' ')
-root.imprimir_central()
-print('\nPós-ordem: ', end=' ')
-root.imprimir_pos()
-print('\nTamanho: ',root.tamanho())
-print('Soma: ',root.soma())
+root.insert(1)
+# print('Pré-ordem:', end=' ')
+# root.imprimir_pre()
+# print('\nOrdem central: ', end=' ')
+# root.imprimir_central()
+# print('\nPós-ordem: ', end=' ')
+# root.imprimir_pos()
+# print('\nTamanho: ',root.tamanho())
+# print('Soma: ',root.soma())
 print('Altura: ',root.altura())
 print('Balanceada: ',root.balanceada())
-vet = []
-root.gerar_lista(vet)
-print('lista: ',vet)
+root.imprimir_pre()
+root = root.balanceamento_estatico()
+print('-----------------')
+print('Altura: ',root.altura())
+print('Balanceada: ',root.balanceada())
+root.imprimir_pre()
+
