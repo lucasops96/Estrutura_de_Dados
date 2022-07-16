@@ -2,6 +2,9 @@ class Disciplina:
     def __init__(self,nome):
         self.nome = nome
         self.notas = [0] * 2
+    
+    def calcularMedia(self):
+        self.media = (self.notas[0] + self.notas[1]) / 2
 class Aluno:
     def __init__(self,nome,matricula):
         self.nome = nome
@@ -63,16 +66,14 @@ class Uni:
                 if disciplina.nome == nome_da_disciplina:
                     return disciplina
     
-    def cadastrarNota(self,nome,matricula,nome_da_disciplina,nota):
+    def cadastrarNota(self,nome,matricula,nome_da_disciplina):
         disciplina = self.buscarDisciplina(nome, matricula, nome_da_disciplina)
         if disciplina:
-            op = int(input('1 - Para Primeira nota I\n2 - Para Segunda nota II\n-->:'))
-            if op == 1:
-                disciplina.notas[0] = nota
-                print('Primeira Nota adicionada I')
-            else:
-                disciplina.notas[1] = nota
-                print('Segunda Nota adicionada II')
+            n1 = float(input(' - Digite Primeira nota I: '))
+            n2 = float(input(' - Digite Segunda nota II: '))
+            disciplina.notas[0] = n1
+            disciplina.notas[1] = n2
+            print('Notas adicionadas')
     
     def notasDeUmAluno(self,nome,matricula):
         aluno = self.buscarAluno(nome, matricula)
@@ -125,6 +126,53 @@ class Uni:
             else:
                 disciplina.notas[1] = 0
                 print('Segunda Nota REMOVIDA II')
+    
+    def atualizarAluno(self,nome,matricula):
+        aluno = self.buscarAluno(nome, matricula)
+        if aluno:
+            aluno.nome = input('Atualize o nome do Aluno: ')
+            aluno.matricula = int(input('Atualize a Matrícula: '))
+            print('Aluno atualizado')
+        else:
+            print('Aluno inexistente')
+    
+    def atualizarDisciplina(self,nome,matricula,nome_da_disciplina):
+        disciplina = self.buscarDisciplina(nome, matricula, nome_da_disciplina)
+        if disciplina:
+            disciplina.nome = input('Atualize o nome da Disciplina: ')
+            disciplina.notas[0] = float(input('Atualize a Primeira Nota: '))
+            disciplina.notas[1] = float(input('Atualize a Segunda Nota: '))
+            print('Disciplina e Notas Atualizadas')
+    
+    def vizualizarMedia(self,nome,matricula,nome_da_disciplina):
+        disciplina = self.buscarDisciplina(nome, matricula, nome_da_disciplina)
+        if disciplina:
+            disciplina.calcularMedia()
+            print('Nome:',nome,' - ',matricula)
+            print(disciplina.nome,' Nota I: ',disciplina.notas[0],' Nota II: ',disciplina.notas[1])
+            print('Média: ',disciplina.media)
+    
+    def vizualizarMediasMaior(self):
+        if self.data:
+            if self.left:
+                self.left.vizualizarMediasMaior()
+            for disciplina in self.data.disciplinas:
+                disciplina.calcularMedia()
+                if disciplina.media >= 7:
+                    print(self.data.nome,' - ',disciplina.nome,' Média: ',disciplina.media)
+            if self.right:
+                self.right.vizualizarMediasMaior()
+    
+    def vizualizarMediasMenor(self):
+        if self.data:
+            if self.left:
+                self.left.vizualizarMediasMenor()
+            for disciplina in self.data.disciplinas:
+                disciplina.calcularMedia()
+                if disciplina.media < 7:
+                    print(self.data.nome,' - ',disciplina.nome,' Média: ',disciplina.media)
+            if self.right:
+                self.right.vizualizarMediasMenor()
 
 
 
@@ -141,12 +189,13 @@ root.imprimir_pre()
 
 op = int(input('Digite 1 para iniciar o sistema: '))
 while op != 0:
-    op = int(input('1 - Para cadastrar Aluno\n2 - Cadastrar disciplina em Aluno\n3 - Cadastrar nota em disciplina de Aluno\n4 - Vizualizar Notas de um Aluno\n5 - Remover Aluno\n6 - Visualizar os nomes dos alunos em ordem alfabética\n7 - Remover Disciplina\n8 - Remover Nota de Disciplina\n-->:'))
+    op = int(input('1 - Para cadastrar Aluno\n2 - Cadastrar disciplina em Aluno\n3 - Cadastrar nota em disciplina de Aluno\n4 - Vizualizar Notas de um Aluno\n5 - Remover Aluno\n6 - Visualizar os nomes dos alunos em ordem alfabética\n7 - Remover Disciplina\n8 - Remover Nota de Disciplina\n9 - Atualizar aluno\n10 - Atualizar disciplina de aluno\n11 - Visualizar a média do aluno em uma disciplina\n12 - Visualizar médias\n0 - Para Encerrar o sistema\n-->:'))
     if op == 1:
         print('-------Cadastrar Aluno--------')
         nome = input('Digite o nome do Aluno: ')
         matricula = int(input('Digite a matricula do Aluno: '))
         root.insert(Aluno(nome,matricula))
+        print('Aluno Cadastrado')
         print('----------------------')
     elif op == 2:
         print('-------Cadastrar Disciplina--------')
@@ -160,8 +209,7 @@ while op != 0:
         cnome = input('Digite o nome do Aluno: ')
         cmatricula = int(input('Digite a matricula do Aluno: '))
         nome_da_disciplina = input('Digite o nome da Disciplina: ')
-        nota = float(input('Digite a nota: '))
-        root.cadastrarNota(cnome, cmatricula, nome_da_disciplina, nota)
+        root.cadastrarNota(cnome, cmatricula, nome_da_disciplina)
         print('----------------------')
     elif op == 4:
         print('-------Vizualizar Nota--------')
@@ -192,6 +240,34 @@ while op != 0:
         fmatricula = int(input('Digite a matricula do Aluno: '))
         fnome_da_disciplina = input('Digite o nome da Disciplina: ')
         root.removerNota(fnome, fmatricula, fnome_da_disciplina)
+        print('----------------------')
+    elif op == 9:
+        print('-------Atualizar aluno--------')
+        anome = input('Digite o nome do Aluno: ')
+        amatricula = int(input('Digite a matricula do Aluno: '))
+        root.atualizarAluno(anome, amatricula)
+        print('----------------------')
+    elif op == 10:
+        print('--------Atualizar disciplina de aluno-------')
+        aunome = input('Digite o nome do Aluno: ')
+        aumatricula = int(input('Digite a matricula do Aluno: '))
+        aunome_da_disciplina = input('Digite o nome da Disciplina: ')
+        root.atualizarDisciplina(aunome, aumatricula, aunome_da_disciplina)
+        print('----------------------')
+    elif op == 11:
+        print('--------Visualizar a média do aluno-------')
+        mnome = input('Digite o nome do Aluno: ')
+        mmatricula = int(input('Digite a matricula do Aluno: '))
+        mnome_da_disciplina = input('Digite o nome da Disciplina: ')
+        root.vizualizarMedia(mnome, mmatricula, mnome_da_disciplina)
+        print('----------------------')
+    elif op == 12:
+        print('--------Visualizar as médias dos alunos-------')
+        kind = int(input('1 - Para Médias Maior ou igual a 7\n2 - Para Médias Menor que 7\n-->:'))
+        if kind == 1:
+            root.vizualizarMediasMaior()
+        else:
+            root.vizualizarMediasMenor()
         print('----------------------')
 
 
