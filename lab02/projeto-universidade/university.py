@@ -119,7 +119,7 @@ class Uni:
     def removerNota(self,nome,matricula,nome_da_disciplina):
         disciplina = self.buscarDisciplina(nome, matricula, nome_da_disciplina)
         if disciplina:
-            op = int(input('1 - Para Primeira nota I\n2 - Para Segunda nota II\n-->:'))
+            op = int(input('1 - Para Remover Primeira nota I\n2 - Para Remover Segunda nota II\n-->:'))
             if op == 1:
                 disciplina.notas[0] = 0
                 print('Primeira Nota REMOVIDA I')
