@@ -35,7 +35,7 @@ class Uni:
         if self.data:
             if self.left:
                 self.left.imprimir_pre()
-            print('-',self.data.nome,'-')
+            print('-',self.data.nome,'-',self.data.matricula)
             if self.right:
                 self.right.imprimir_pre()
     
