@@ -35,11 +35,11 @@ class Uni:
         if self.data:
             if self.left:
                 self.left.imprimir_pre()
-            print(self.left.data.nome if self.left else 'x','-',self.data.nome,'-',self.right.data.nome if self.right else 'x')
+            print('-',self.data.nome,'-')
             if self.right:
                 self.right.imprimir_pre()
     
-    def buscarAluno(self,nome,matricula):
+    def buscarAluno(self,nome,matricula,aluno=None):
         if self.data.nome == nome and self.data.matricula == matricula:
             return self.data
         elif nome < self.data.nome:
