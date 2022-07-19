@@ -182,7 +182,13 @@ class Uni:
 
 
 root = Uni()
-
+# root.insert(Aluno('miguel',2011))
+# root.insert(Aluno('sara',2009))
+# root.insert(Aluno('leticia',2002))
+# root.insert(Aluno('ana',2015))
+# root.insert(Aluno('marcos',2012))
+# root.insert(Aluno('paulo',2022))
+# root.imprimirAlunos()
 
 
 op = int(input('Digite 1 para iniciar o sistema: '))
