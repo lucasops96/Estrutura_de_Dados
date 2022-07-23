@@ -21,10 +21,6 @@ class Hash:
             if funcionario.nome == nome_do_funcionario:
                 return funcionario.salario
     
-    def printFuncionarios(self):
-        for i in self.tabela:
-            for j in i:
-                print(j.nome,' - ',j.salario,end=' ')
 
 
 tabelaFuncionarios = Hash()
