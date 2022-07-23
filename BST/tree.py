@@ -127,32 +127,44 @@ class BSTnode:
             self.gerar_arvore(l,0, len(l)-1)
             return self
 
+    def espelho(self):
+        if self.left:
+            self.left.espelho()
+        if self.right:
+            self.right.espelho()
+        if self.left or self.right:
+            aux = self.left
+            self.left = self.right
+            self.right = aux
+
 
 
 root = BSTnode()
-root.insert(10)
+root.insert(5)
+root.insert(2)
+root.insert(8)
+root.insert(3)
 root.insert(7)
 root.insert(9)
-root.insert(5)
-root.insert(20)
-root.insert(25)
-root.insert(13)
-root.insert(2)
-root.insert(1)
-print('Pré-ordem:', end=' ')
+# root.insert(13)
+# root.insert(2)
+# root.insert(1)
+# print('Pré-ordem:', end=' ')
+# root.imprimir_pre()
+# print('\nOrdem central: ', end=' ')
+# root.imprimir_central()
+# print('\nPós-ordem: ', end=' ')
+# root.imprimir_pos()
+# print('\nTamanho: ',root.tamanho())
+# print('Soma: ',root.soma())
+# print('Altura: ',root.altura())
+# print('Balanceada: ',root.balanceada())
+# root = root.balanceamento_estatico()
+# print('-----------------')
+# print('Altura: ',root.altura())
+# print('Balanceada: ',root.balanceada())
 root.imprimir_pre()
-print('\nOrdem central: ', end=' ')
-root.imprimir_central()
-print('\nPós-ordem: ', end=' ')
-root.imprimir_pos()
-print('\nTamanho: ',root.tamanho())
-print('Soma: ',root.soma())
-print('Altura: ',root.altura())
-print('Balanceada: ',root.balanceada())
-root = root.balanceamento_estatico()
+root.espelho()
 print('-----------------')
-print('Altura: ',root.altura())
-print('Balanceada: ',root.balanceada())
 root.imprimir_pre()
-
 
